@@ -10,6 +10,13 @@ COMMODITIES_ACCESS_KEY = os.getenv("COMMODITIES_ACCESS_KEY")
 def get_commodity_data(parameter, start_date, end_date):
     """
     read in data from commodities-api.com
+    --------
+    inputs:
+    parameter : commodity of interest available from https://commodities-api.com/symbols
+    start and end data in form "yyyy-mm-dd"
+    -----
+    output:
+    data from api in json form
     """
         base_url = "https://commodities-api.com/api/timeseries?"
         access_key = f"access_key={COMMODITIES_ACCESS_KEY}"
@@ -24,6 +31,13 @@ def get_commodity_data(parameter, start_date, end_date):
 def read_and_write_json_from_API(parameter, start_date, end_date):
     """
     read in data from commodities-api.com and write file (to minimise use of free API requests)
+
+    inputs:
+    parameter : commodity of interest available from https://commodities-api.com/symbols
+    start and end data in form "yyyy-mm-dd"
+    -----
+    output:
+    writes json to folder
     """
     commodity_json = get_commodity_data(parameter, start_date, end_date)
     commodity_json_string = json.dumps(commodity_json)
@@ -36,6 +50,11 @@ def read_and_write_json_from_API(parameter, start_date, end_date):
 def process_saved_api_data(parameter):
     """
     turn API data into useable pandas dataframe
+    inputs:
+    parameter relating to saved json 
+    -----
+    output:
+    nice pandas df
     """
     file_name = f"{parameter}_timeseries.json"
     f = open(file_name)
