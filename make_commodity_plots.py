@@ -79,28 +79,26 @@ def make_mpl_line_plot(
 
 
 def main():
-    df_com = read_and_merge_commodities(COMMODITIES)
-    df_com_processed = add_analysed_cols(df_com)
+    df = read_and_merge_commodities(COMMODITIES+CURRENCIES)
+    df_processed = add_analysed_cols(df)
 
-    df_currencies = read_and_merge_commodities(CURRENCIES)
-    df_currency_processed = add_analysed_cols(df_currencies)
 
     make_mpl_line_plot(
-        df_currency_processed,
+        df_processed,
         "perc_change",
         CURRENCIES,
         as_percentage=True,
         filename="currencies_perc_change",
     )
     make_mpl_line_plot(
-        df_currency_processed,
+        df_processed,
         "normalised_rolling",
         CURRENCIES,
         filename="currencies_normalised",
     )
 
     make_mpl_line_plot(
-        df_com_processed,
+        df_processed,
         "perc_change",
         COMMODITIES,
         as_percentage=True,
@@ -108,7 +106,7 @@ def main():
         label_lines=True,
     )
     make_mpl_line_plot(
-        df_com_processed,
+        df_processed,
         "normalised_rolling",
         COMMODITIES,
         filename="commodities_normalised",

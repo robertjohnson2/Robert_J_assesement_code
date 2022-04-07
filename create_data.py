@@ -1,6 +1,6 @@
 from commodities_api_utils import read_and_write_json_from_API
 
-COMMODITIES = ["WHEAT", "CORN", "ETHANOL", "BRENTOIL", "NG"]
+COMMODITIES = ["WHEAT", "CORN", "BRENTOIL", "NG"]
 
 CURRENCIES = ["RUB", "UAH", "EUR"]
 
