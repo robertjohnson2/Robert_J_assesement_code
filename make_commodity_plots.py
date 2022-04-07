@@ -1,8 +1,6 @@
-from telnetlib import COM_PORT_OPTION
 from commodities_api_utils import process_saved_api_data
 import pandas as pd
 import numpy as np
-import plotly.express as px
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.ticker import StrMethodFormatter
@@ -32,11 +30,6 @@ def add_analysed_cols(df):
     df['perc_change'] = (df.cost_rolling-g.transform('mean'))/g.transform('mean')
 
     return df
-
-
-def make_commodity_plot(df, yvar):
-    fig = px.line(df, x="date", y=yvar, color="commodity")
-    return fig
 
 
 def make_mpl_line_plot(df, yvar, commodities, filename, as_percentage=None, label_lines=None):
