@@ -69,5 +69,5 @@ def process_saved_api_data(parameter):
         values.append(amount)
     df = pd.DataFrame({"date": dates, "amount": values})
     df["date"] = pd.to_datetime(df["date"])
-    df = df.assign(commodity = parameter)
+    df = df.assign(commodity=parameter)
     return df
