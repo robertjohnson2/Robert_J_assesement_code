@@ -30,7 +30,7 @@ def get_commodity_data(parameter, start_date, end_date):
 
 def read_and_write_json_from_API(parameter, start_date, end_date):
     """
-    read in data from commodities-api.com and write file (to minimise use of free API requests)
+    read in data from commodities-api.com and write file (to minimise use of limited free API requests)
 
     inputs:
     parameter : commodity of interest available from https://commodities-api.com/symbols
@@ -41,7 +41,7 @@ def read_and_write_json_from_API(parameter, start_date, end_date):
     """
     commodity_json = get_commodity_data(parameter, start_date, end_date)
     commodity_json_string = json.dumps(commodity_json)
-    file_name = f"{parameter}_timeseries.json"
+    file_name = f"data/{parameter}_timeseries.json"
     jsonFile = open(file_name, "w")
     jsonFile.write(commodity_json_string)
     jsonFile.close()
@@ -56,16 +56,18 @@ def process_saved_api_data(parameter):
     output:
     nice pandas df
     """
-    file_name = f"{parameter}_timeseries.json"
+    file_name = f"data/{parameter}_timeseries.json"
     f = open(file_name)
     data = json.load(f)
     dates = []
     for i in data["data"]["rates"]:
         dates.append(i)
-    commodity_values = []
+    values = []
     for j in dates:
         day_dict = data["data"]["rates"][j]
-        value = day_dict.get(parameter)
-        commodity_values.append(value)
-    df = pd.DataFrame({"date": dates, "commodity values": commodity_values})
+        amount = day_dict.get(parameter)
+        values.append(amount)
+    df = pd.DataFrame({"date": dates, "amount": values})
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.assign(commodity = parameter)
     return df
